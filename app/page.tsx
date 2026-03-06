@@ -124,16 +124,29 @@ export default function Home() {
     });
   }, [searchQuery, selectedRegion, countriesData]);
 
+  const handleCountrySelect = (country: any) => {
+    setSelectedCountry(country);
+    setIsSearchOpen(false);
+
+    // GA 이벤트 전송
+    if (typeof window !== 'undefined' && window.gtag) {
+      window.gtag('event', 'select_country', {
+        country_name: country.name?.ko || country.name,
+        country_id: country.id,
+        region: country.region
+      });
+    }
+  };
+
   const handleRandomCountry = () => {
     const randomIndex = Math.floor(Math.random() * countriesData.length);
-    setSelectedCountry(countriesData[randomIndex]);
-    setIsSearchOpen(false);
+    handleCountrySelect(countriesData[randomIndex]);
   };
 
   const onSelectCountryFromQuiz = (countryId: string) => {
     const country = countriesData.find((c: any) => c.id === countryId);
     if (country) {
-      setSelectedCountry(country);
+      handleCountrySelect(country);
     }
   };
 
@@ -290,7 +303,7 @@ export default function Home() {
               name: c.name[language] || c.name['en'] || c.name
             }))}
             setSelectedCountry={(c) => {
-              setSelectedCountry(c);
+              handleCountrySelect(c);
             }}
             handleRandomCountry={handleRandomCountry}
             selectedCountry={localizedSelectedCountry}

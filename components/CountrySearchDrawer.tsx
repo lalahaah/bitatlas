@@ -40,6 +40,16 @@ export default function CountrySearchDrawer({
 }: CountrySearchDrawerProps) {
     const [isFlipped, setIsFlipped] = useState(false);
 
+    const handleAffiliateClick = (provider: string, countryName: string) => {
+        if (typeof window !== 'undefined' && window.gtag) {
+            window.gtag('event', 'affiliate_click', {
+                provider: provider,
+                target_country: countryName,
+                content_type: provider === 'Aviasales' ? 'Flight' : 'Tour_Activity'
+            });
+        }
+    };
+
     // 검색 모달이 닫히면 항상 앞면(검색 목록)으로 초기화
     useEffect(() => {
         if (!isSearchOpen) {
@@ -234,6 +244,7 @@ export default function CountrySearchDrawer({
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 suppressHydrationWarning={true}
+                                                onClick={() => handleAffiliateClick('Aviasales', selectedCountry.name)}
                                                 className="shrink-0 flex items-center gap-2 px-4 py-2 bg-indigo-500/10 hover:bg-indigo-500/20 border border-indigo-500/20 rounded-full text-indigo-300 text-[10px] font-bold transition-all shadow-lg hover:shadow-indigo-500/20 group"
                                             >
                                                 ✈️ <span className="group-hover:text-white transition-colors">{selectedCountry.name} {commonT.affiliateFlights || (language === 'ko' ? '항공권 특가' : language === 'en' ? 'Hot Flights' : 'Ofertas Vuelos')}</span>
@@ -246,6 +257,7 @@ export default function CountrySearchDrawer({
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                                 suppressHydrationWarning={true}
+                                                onClick={() => handleAffiliateClick('Klook', selectedCountry.name)}
                                                 className="shrink-0 flex items-center gap-2 px-4 py-2 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/20 rounded-full text-emerald-400 text-[10px] font-bold transition-all shadow-lg hover:shadow-emerald-500/20 group"
                                             >
                                                 🎫 <span className="group-hover:text-white transition-colors">{(language === 'ko' ? '투어 & 액티비티' : language === 'en' ? 'Tours & Activities' : 'Tours y Actividades')}</span>
