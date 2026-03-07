@@ -129,7 +129,7 @@ export default function Home() {
     setIsSearchOpen(false);
 
     // GA 이벤트 전송
-    if (typeof window !== 'undefined' && window.gtag) {
+    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
       window.gtag('event', 'select_country', {
         country_name: country.name?.ko || country.name,
         country_id: country.id,
