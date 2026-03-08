@@ -24,8 +24,7 @@ export const metadata: Metadata = {
   title: "BitAtlas - Global Curiosity Explorer & AI Docent",
   description: "Explore the world through topics and AI data visualization. Discover capitals, landmarks, and economic data with our 3D globe.",
   icons: {
-    icon: "/icon.png",
-    apple: "/apple-touch-icon.png",
+    icon: "/favicon.svg",
   },
   other: {
     "agd-partner-manual-verification": "",
